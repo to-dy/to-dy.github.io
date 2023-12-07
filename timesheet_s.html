@@ -1,202 +1,1143 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Your Timesheet</title>
-    <link rel="stylesheet" href="https://billing.staging.birdie.care/api/v1/timesheet/static/styles.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
 
-  <style>
-    .list-group-item {
-      padding: 20px 18px;
-    }
+<head>
+  <title>Your Timesheet</title>
+  <link rel="stylesheet" href="https://billing.staging.birdie.care/api/v1/timesheet/static/styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
 
-    .list-group-item span {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      margin-left: auto;
-      content: '';
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      transform: rotate(270deg);
-      background-size: 20px;
-    }
+<style>
+  .list-group-item {
+    padding: 20px 18px;
+  }
 
-    .card-body div {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: row;
-      padding-bottom: 16px;
-    }
-  </style>
+  .list-group-item span {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+    content: '';
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    transform: rotate(270deg);
+    background-size: 20px;
+  }
 
-  <body>
-    <ul class="list-group" id="pageModalExample"></ul>
+  .card-body div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-bottom: 16px;
+  }
+</style>
 
-    <!-- Modal -->
-    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
-        <div class="modal-content">
-          <div class="modal-body"></div>
-        </div>
+<body>
+  <ul class="list-group" id="pageModalExample"></ul>
+
+  <!-- Modal -->
+  <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-body"></div>
       </div>
     </div>
+  </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        const dummyData = [
-          {
-            date: '8 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          // make more dummy data copilot
-          {
-            date: '9 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '10 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '11 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '12 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '13 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '14 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '15 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
-          },
-          {
-            date: '16 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '17 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '18 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '19 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '20 November',
-            entries: [
-              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
-            ],
-          },
-          {
-            date: '21 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
-          },
-          {
-            date: '22 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
-          },
-          {
-            date: '23 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
-          },
-          {
-            date: '24 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00' }],
-          },
-          {
-            date: '25 November',
-            entries: [{ client: 'CN', start: '09:00', end: '10:30' }],
-          },
-          {
-            date: '26 November',
-            entries: [{ client: 'CN', start: '09:00' }],
-          },
-        ];
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const dummyData = [
+        {
+          "date": "7 December",
+          "entries": [
+            {
+              "client": "GI",
+              "start": "11:23",
+              "end": "13:53",
+              "milage": "3.82",
+              "time": "3h 37m"
+            },
+            {
+              "client": "QG",
+              "start": "16:51",
+              "end": "15:56",
+              "milage": "7.93",
+              "time": "1h 1m"
+            },
+            {
+              "client": "AS",
+              "start": "12:55",
+              "end": "12:00",
+              "milage": "5.50",
+              "time": "3h 27m"
+            },
+            {
+              "client": "GE",
+              "start": "12:02",
+              "end": "16:25",
+              "milage": "4.30",
+              "time": "2h 11m"
+            },
+            {
+              "client": "XO",
+              "start": "12:42",
+              "end": "13:45",
+              "milage": "14.06",
+              "time": "1h 42m"
+            },
+            {
+              "client": "BO",
+              "start": "16:31",
+              "end": "11:38",
+              "milage": "11.11",
+              "time": "1h 57m"
+            },
+            {
+              "client": "AH",
+              "start": "12:58",
+              "end": "17:28",
+              "milage": "14.79",
+              "time": "1h 25m"
+            }
+          ]
+        },
+        {
+          "date": "8 December",
+          "entries": [
+            {
+              "client": "ZE",
+              "start": "10:16",
+              "end": "11:13",
+              "milage": "18.62",
+              "time": "1h 43m"
+            },
+            {
+              "client": "ZH",
+              "start": "11:08",
+              "end": "12:22",
+              "milage": "17.90",
+              "time": "1h 41m"
+            },
+            {
+              "client": "BL",
+              "start": "15:57",
+              "end": "13:48",
+              "milage": "19.07",
+              "time": "4h 45m"
+            },
+            {
+              "client": "HI",
+              "start": "14:18",
+              "end": "10:14",
+              "milage": "4.44",
+              "time": "4h 47m"
+            },
+            {
+              "client": "SV",
+              "start": "16:40",
+              "end": "16:17",
+              "milage": "9.48",
+              "time": "1h 0m"
+            }
+          ]
+        },
+        {
+          "date": "9 December",
+          "entries": [
+            {
+              "client": "IT",
+              "start": "15:00",
+              "end": "10:57",
+              "milage": "2.28",
+              "time": "2h 33m"
+            },
+            {
+              "client": "HX",
+              "start": "17:30",
+              "end": "10:34",
+              "milage": "15.90",
+              "time": "3h 24m"
+            },
+            {
+              "client": "QD",
+              "start": "17:11",
+              "end": "14:56",
+              "milage": "17.67",
+              "time": "1h 9m"
+            }
+          ]
+        },
+        {
+          "date": "10 December",
+          "entries": [
+            {
+              "client": "VE",
+              "start": "11:59",
+              "end": "16:27",
+              "milage": "4.88",
+              "time": "4h 37m"
+            },
+            {
+              "client": "RK",
+              "start": "09:24",
+              "end": "10:52",
+              "milage": "17.17",
+              "time": "1h 48m"
+            },
+            {
+              "client": "OZ",
+              "start": "15:47",
+              "end": "13:01",
+              "milage": "17.86",
+              "time": "4h 55m"
+            },
+            {
+              "client": "GF",
+              "start": "13:17",
+              "end": "11:16",
+              "milage": "14.53",
+              "time": "1h 51m"
+            },
+            {
+              "client": "BI",
+              "start": "12:32",
+              "end": "13:57",
+              "milage": "19.76",
+              "time": "2h 24m"
+            }
+          ]
+        },
+        {
+          "date": "11 December",
+          "entries": [
+            {
+              "client": "KL",
+              "start": "17:43",
+              "end": "09:35",
+              "milage": "0.61",
+              "time": "3h 34m"
+            },
+            {
+              "client": "DI",
+              "start": "12:51",
+              "end": "16:48",
+              "milage": "6.56",
+              "time": "3h 29m"
+            },
+            {
+              "client": "VQ",
+              "start": "09:00",
+              "end": "09:10",
+              "milage": "10.18",
+              "time": "3h 17m"
+            },
+            {
+              "client": "TM",
+              "start": "12:20",
+              "end": "11:23",
+              "milage": "17.86",
+              "time": "1h 28m"
+            }
+          ]
+        },
+        {
+          "date": "12 December",
+          "entries": [
+            {
+              "client": "HD",
+              "start": "15:49",
+              "end": "12:44",
+              "milage": "5.01",
+              "time": "4h 35m"
+            },
+            {
+              "client": "FZ",
+              "start": "09:47",
+              "end": "15:41",
+              "milage": "18.42",
+              "time": "2h 49m"
+            },
+            {
+              "client": "IG",
+              "start": "16:14",
+              "end": "10:18",
+              "milage": "4.16",
+              "time": "4h 55m"
+            },
+            {
+              "client": "RS",
+              "start": "14:18",
+              "end": "15:49",
+              "milage": "19.34",
+              "time": "4h 56m"
+            },
+            {
+              "client": "EM",
+              "start": "13:36",
+              "end": "13:12",
+              "milage": "5.90",
+              "time": "1h 53m"
+            }
+          ]
+        },
+        {
+          "date": "13 December",
+          "entries": [
+            {
+              "client": "LG",
+              "start": "11:56",
+              "end": "10:58",
+              "milage": "8.10",
+              "time": "3h 59m"
+            },
+            {
+              "client": "DI",
+              "start": "16:04",
+              "end": "09:03",
+              "milage": "16.51",
+              "time": "3h 25m"
+            },
+            {
+              "client": "RG",
+              "start": "11:16",
+              "end": "17:17",
+              "milage": "1.41",
+              "time": "2h 8m"
+            },
+            {
+              "client": "ER",
+              "start": "09:12",
+              "end": "09:41",
+              "milage": "7.41",
+              "time": "3h 44m"
+            }
+          ]
+        },
+        {
+          "date": "14 December",
+          "entries": [
+            {
+              "client": "ZG",
+              "start": "09:03",
+              "end": "10:27",
+              "milage": "0.91",
+              "time": "3h 47m"
+            },
+            {
+              "client": "GG",
+              "start": "13:52",
+              "end": "12:16",
+              "milage": "10.60",
+              "time": "4h 14m"
+            },
+            {
+              "client": "GT",
+              "start": "10:27",
+              "end": "09:53",
+              "milage": "8.07",
+              "time": "3h 9m"
+            }
+          ]
+        },
+        {
+          "date": "15 December",
+          "entries": [
+            {
+              "client": "ZZ",
+              "start": "14:53",
+              "end": "11:28",
+              "milage": "9.14",
+              "time": "1h 39m"
+            },
+            {
+              "client": "RR",
+              "start": "17:28",
+              "end": "12:05",
+              "milage": "14.89",
+              "time": "3h 48m"
+            }
+          ]
+        },
+        {
+          "date": "16 December",
+          "entries": [
+            {
+              "client": "OE",
+              "start": "14:36",
+              "end": "17:49",
+              "milage": "13.57",
+              "time": "4h 11m"
+            },
+            {
+              "client": "RM",
+              "start": "09:00",
+              "end": "16:02",
+              "milage": "2.49",
+              "time": "3h 34m"
+            }
+          ]
+        },
+        {
+          "date": "17 December",
+          "entries": [
+            {
+              "client": "QX",
+              "start": "13:35",
+              "end": "17:58",
+              "milage": "16.21",
+              "time": "4h 32m"
+            },
+            {
+              "client": "MM",
+              "start": "10:42",
+              "end": "12:10",
+              "milage": "6.23",
+              "time": "3h 43m"
+            },
+            {
+              "client": "QW",
+              "start": "11:55",
+              "end": "12:21",
+              "milage": "14.03",
+              "time": "4h 37m"
+            },
+            {
+              "client": "SA",
+              "start": "14:04",
+              "end": "14:26",
+              "milage": "10.23",
+              "time": "2h 7m"
+            },
+            {
+              "client": "WL",
+              "start": "13:05",
+              "end": "16:19",
+              "milage": "5.07",
+              "time": "2h 14m"
+            },
+            {
+              "client": "RH",
+              "start": "13:29",
+              "end": "16:43",
+              "milage": "16.54",
+              "time": "2h 54m"
+            }
+          ]
+        },
+        {
+          "date": "18 December",
+          "entries": [
+            {
+              "client": "BX",
+              "start": "10:56",
+              "end": "14:03",
+              "milage": "0.78",
+              "time": "3h 59m"
+            },
+            {
+              "client": "UG",
+              "start": "10:13",
+              "end": "12:08",
+              "milage": "1.77",
+              "time": "2h 55m"
+            },
+            {
+              "client": "JG",
+              "start": "16:43",
+              "end": "14:40",
+              "milage": "1.80",
+              "time": "1h 6m"
+            }
+          ]
+        },
+        {
+          "date": "19 December",
+          "entries": [
+            {
+              "client": "WP",
+              "start": "09:31",
+              "end": "13:45",
+              "milage": "6.96",
+              "time": "3h 25m"
+            },
+            {
+              "client": "BT",
+              "start": "10:19",
+              "end": "13:44",
+              "milage": "9.93",
+              "time": "4h 25m"
+            },
+            {
+              "client": "ES",
+              "start": "09:49",
+              "end": "13:00",
+              "milage": "0.82",
+              "time": "2h 59m"
+            },
+            {
+              "client": "YQ",
+              "start": "14:20",
+              "end": "09:44",
+              "milage": "19.42",
+              "time": "2h 42m"
+            },
+            {
+              "client": "YQ",
+              "start": "11:39",
+              "end": "14:51",
+              "milage": "18.44",
+              "time": "4h 26m"
+            },
+            {
+              "client": "GU",
+              "start": "14:27",
+              "end": "16:06",
+              "milage": "18.95",
+              "time": "2h 26m"
+            }
+          ]
+        },
+        {
+          "date": "20 December",
+          "entries": [
+            {
+              "client": "EI",
+              "start": "13:39",
+              "end": "17:00",
+              "milage": "0.65",
+              "time": "2h 16m"
+            },
+            {
+              "client": "BM",
+              "start": "13:43",
+              "end": "12:11",
+              "milage": "9.06",
+              "time": "2h 41m"
+            },
+            {
+              "client": "VI",
+              "start": "14:48",
+              "end": "15:59",
+              "milage": "15.41",
+              "time": "3h 11m"
+            }
+          ]
+        },
+        {
+          "date": "21 December",
+          "entries": [
+            {
+              "client": "CT",
+              "start": "09:50",
+              "end": "12:04",
+              "milage": "13.91",
+              "time": "4h 43m"
+            },
+            {
+              "client": "OX",
+              "start": "09:46",
+              "end": "11:15",
+              "milage": "7.66",
+              "time": "1h 45m"
+            }
+          ]
+        },
+        {
+          "date": "22 December",
+          "entries": [
+            {
+              "client": "JK",
+              "start": "12:16",
+              "end": "16:01",
+              "milage": "19.72",
+              "time": "3h 43m"
+            }
+          ]
+        },
+        {
+          "date": "23 December",
+          "entries": [
+            {
+              "client": "YM",
+              "start": "12:00",
+              "end": "11:42",
+              "milage": "6.39",
+              "time": "2h 50m"
+            },
+            {
+              "client": "BP",
+              "start": "10:39",
+              "end": "09:19",
+              "milage": "17.73",
+              "time": "3h 0m"
+            },
+            {
+              "client": "AU",
+              "start": "14:39",
+              "end": "13:46",
+              "milage": "1.96",
+              "time": "1h 34m"
+            },
+            {
+              "client": "QA",
+              "start": "12:26",
+              "end": "12:50",
+              "milage": "6.75",
+              "time": "3h 51m"
+            }
+          ]
+        },
+        {
+          "date": "24 December",
+          "entries": [
+            {
+              "client": "VT",
+              "start": "10:31",
+              "end": "16:11",
+              "milage": "19.94",
+              "time": "2h 19m"
+            },
+            {
+              "client": "RD",
+              "start": "17:46",
+              "end": "09:54",
+              "milage": "10.48",
+              "time": "1h 2m"
+            },
+            {
+              "client": "RG",
+              "start": "14:22",
+              "end": "15:10",
+              "milage": "2.19",
+              "time": "1h 40m"
+            },
+            {
+              "client": "UK",
+              "start": "09:25",
+              "end": "16:59",
+              "milage": "1.50",
+              "time": "4h 32m"
+            },
+            {
+              "client": "DZ",
+              "start": "16:51",
+              "end": "11:04",
+              "milage": "10.23",
+              "time": "4h 23m"
+            },
+            {
+              "client": "NX",
+              "start": "12:27",
+              "end": "12:15",
+              "milage": "16.88",
+              "time": "2h 12m"
+            }
+          ]
+        },
+        {
+          "date": "25 December",
+          "entries": [
+            {
+              "client": "JW",
+              "start": "09:19",
+              "end": "17:19",
+              "milage": "3.37",
+              "time": "4h 50m"
+            },
+            {
+              "client": "OY",
+              "start": "13:09",
+              "end": "14:00",
+              "milage": "10.45",
+              "time": "1h 47m"
+            },
+            {
+              "client": "CU",
+              "start": "14:02",
+              "end": "13:48",
+              "milage": "12.72",
+              "time": "3h 33m"
+            },
+            {
+              "client": "WS",
+              "start": "09:45",
+              "end": "15:37",
+              "milage": "8.29",
+              "time": "1h 42m"
+            },
+            {
+              "client": "GY",
+              "start": "16:11",
+              "end": "09:31",
+              "milage": "20.00",
+              "time": "2h 3m"
+            },
+            {
+              "client": "UT",
+              "start": "16:31",
+              "end": "13:10",
+              "milage": "5.07",
+              "time": "3h 40m"
+            },
+            {
+              "client": "ZC",
+              "start": "17:36",
+              "end": "14:21",
+              "milage": "12.02",
+              "time": "3h 24m"
+            }
+          ]
+        },
+        {
+          "date": "26 December",
+          "entries": [
+            {
+              "client": "TF",
+              "start": "16:00",
+              "end": "12:33",
+              "milage": "2.41",
+              "time": "2h 43m"
+            },
+            {
+              "client": "OL",
+              "start": "12:50",
+              "end": "11:58",
+              "milage": "18.38",
+              "time": "3h 40m"
+            },
+            {
+              "client": "ZC",
+              "start": "10:52",
+              "end": "16:20",
+              "milage": "0.68",
+              "time": "1h 21m"
+            },
+            {
+              "client": "FF",
+              "start": "14:15",
+              "end": "11:40",
+              "milage": "16.25",
+              "time": "4h 0m"
+            }
+          ]
+        },
+        {
+          "date": "27 December",
+          "entries": [
+            {
+              "client": "WW",
+              "start": "14:27",
+              "end": "17:52",
+              "milage": "2.97",
+              "time": "1h 43m"
+            },
+            {
+              "client": "VH",
+              "start": "14:58",
+              "end": "12:20",
+              "milage": "2.34",
+              "time": "3h 12m"
+            },
+            {
+              "client": "BY",
+              "start": "12:31",
+              "end": "16:20",
+              "milage": "8.63",
+              "time": "2h 56m"
+            },
+            {
+              "client": "IF",
+              "start": "10:52",
+              "end": "09:26",
+              "milage": "19.01",
+              "time": "1h 20m"
+            }
+          ]
+        },
+        {
+          "date": "28 December",
+          "entries": [
+            {
+              "client": "UA",
+              "start": "09:14",
+              "end": "14:09",
+              "milage": "1.24",
+              "time": "2h 38m"
+            },
+            {
+              "client": "VT",
+              "start": "12:55",
+              "end": "11:17",
+              "milage": "10.90",
+              "time": "1h 39m"
+            },
+            {
+              "client": "UP",
+              "start": "12:20",
+              "end": "09:26",
+              "milage": "5.05",
+              "time": "3h 10m"
+            }
+          ]
+        },
+        {
+          "date": "29 December",
+          "entries": [
+            {
+              "client": "NA",
+              "start": "17:43",
+              "end": "10:31",
+              "milage": "6.59",
+              "time": "2h 23m"
+            },
+            {
+              "client": "HE",
+              "start": "16:33",
+              "end": "15:08",
+              "milage": "1.12",
+              "time": "1h 59m"
+            },
+            {
+              "client": "UU",
+              "start": "12:03",
+              "end": "12:39",
+              "milage": "15.25",
+              "time": "2h 34m"
+            },
+            {
+              "client": "VP",
+              "start": "17:22",
+              "end": "16:33",
+              "milage": "15.85",
+              "time": "3h 23m"
+            }
+          ]
+        },
+        {
+          "date": "30 December",
+          "entries": [
+            {
+              "client": "CG",
+              "start": "16:43",
+              "end": "10:04",
+              "milage": "0.02",
+              "time": "4h 51m"
+            },
+            {
+              "client": "JO",
+              "start": "17:56",
+              "end": "17:05",
+              "milage": "10.30",
+              "time": "2h 10m"
+            },
+            {
+              "client": "SO",
+              "start": "09:43",
+              "end": "09:47",
+              "milage": "10.34",
+              "time": "1h 27m"
+            },
+            {
+              "client": "KF",
+              "start": "16:55",
+              "end": "09:46",
+              "milage": "11.34",
+              "time": "1h 48m"
+            },
+            {
+              "client": "VA",
+              "start": "11:02",
+              "end": "17:35",
+              "milage": "0.98",
+              "time": "1h 2m"
+            }
+          ]
+        },
+        {
+          "date": "31 December",
+          "entries": [
+            {
+              "client": "CY",
+              "start": "11:12",
+              "end": "13:19",
+              "milage": "6.95",
+              "time": "2h 57m"
+            }
+          ]
+        },
+        {
+          "date": "1 January",
+          "entries": [
+            {
+              "client": "UI",
+              "start": "17:34",
+              "end": "12:56",
+              "milage": "18.96",
+              "time": "4h 28m"
+            },
+            {
+              "client": "WZ",
+              "start": "10:45",
+              "end": "17:47",
+              "milage": "15.95",
+              "time": "2h 58m"
+            },
+            {
+              "client": "HO",
+              "start": "10:36",
+              "end": "10:00",
+              "milage": "16.76",
+              "time": "2h 0m"
+            },
+            {
+              "client": "SQ",
+              "start": "15:09",
+              "end": "12:35",
+              "milage": "15.17",
+              "time": "3h 7m"
+            },
+            {
+              "client": "XU",
+              "start": "12:29",
+              "end": "09:32",
+              "milage": "14.23",
+              "time": "3h 3m"
+            },
+            {
+              "client": "HX",
+              "start": "11:48",
+              "end": "17:17",
+              "milage": "7.71",
+              "time": "3h 1m"
+            },
+            {
+              "client": "RZ",
+              "start": "15:59",
+              "end": "11:51",
+              "milage": "17.29",
+              "time": "2h 45m"
+            }
+          ]
+        },
+        {
+          "date": "2 January",
+          "entries": [
+            {
+              "client": "UL",
+              "start": "12:30",
+              "end": "16:36",
+              "milage": "0.71",
+              "time": "4h 48m"
+            },
+            {
+              "client": "CP",
+              "start": "14:21",
+              "end": "17:47",
+              "milage": "14.90",
+              "time": "3h 54m"
+            },
+            {
+              "client": "VO",
+              "start": "16:25",
+              "end": "13:48",
+              "milage": "15.73",
+              "time": "3h 13m"
+            },
+            {
+              "client": "UC",
+              "start": "17:04",
+              "end": "15:25",
+              "milage": "15.44",
+              "time": "2h 57m"
+            },
+            {
+              "client": "SU",
+              "start": "14:24",
+              "end": "09:54",
+              "milage": "0.50",
+              "time": "4h 54m"
+            },
+            {
+              "client": "CR",
+              "start": "15:56",
+              "end": "16:02",
+              "milage": "7.69",
+              "time": "4h 10m"
+            },
+            {
+              "client": "FN",
+              "start": "16:38",
+              "end": "10:51",
+              "milage": "2.87",
+              "time": "1h 52m"
+            }
+          ]
+        },
+        {
+          "date": "3 January",
+          "entries": [
+            {
+              "client": "CD",
+              "start": "14:43",
+              "end": "17:58",
+              "milage": "19.38",
+              "time": "3h 42m"
+            },
+            {
+              "client": "MP",
+              "start": "10:58",
+              "end": "17:38",
+              "milage": "13.82",
+              "time": "2h 10m"
+            },
+            {
+              "client": "SJ",
+              "start": "15:28",
+              "end": "10:40",
+              "milage": "5.95",
+              "time": "2h 26m"
+            },
+            {
+              "client": "TL",
+              "start": "12:10",
+              "end": "12:04",
+              "milage": "5.02",
+              "time": "1h 29m"
+            },
+            {
+              "client": "HG",
+              "start": "15:17",
+              "end": "12:53",
+              "milage": "13.63",
+              "time": "4h 17m"
+            },
+            {
+              "client": "KJ",
+              "start": "11:45",
+              "end": "16:38",
+              "milage": "4.27",
+              "time": "4h 32m"
+            },
+            {
+              "client": "WS",
+              "start": "14:11",
+              "end": "12:25",
+              "milage": "12.60",
+              "time": "1h 1m"
+            }
+          ]
+        },
+        {
+          "date": "4 January",
+          "entries": [
+            {
+              "client": "DL",
+              "start": "15:08",
+              "end": "15:56",
+              "milage": "12.38",
+              "time": "2h 32m"
+            },
+            {
+              "client": "RG",
+              "start": "15:48",
+              "end": "11:32",
+              "milage": "14.59",
+              "time": "2h 47m"
+            },
+            {
+              "client": "GK",
+              "start": "16:12",
+              "end": "14:47",
+              "milage": "3.36",
+              "time": "3h 34m"
+            },
+            {
+              "client": "BU",
+              "start": "15:23",
+              "end": "11:03",
+              "milage": "14.64",
+              "time": "2h 10m"
+            },
+            {
+              "client": "QU",
+              "start": "13:34",
+              "end": "15:00",
+              "milage": "17.51",
+              "time": "2h 5m"
+            },
+            {
+              "client": "PO",
+              "start": "10:24",
+              "end": "14:41",
+              "milage": "9.06",
+              "time": "3h 7m"
+            },
+            {
+              "client": "MF",
+              "start": "10:04",
+              "end": "11:30",
+              "milage": "7.28",
+              "time": "2h 0m"
+            }
+          ]
+        },
+        {
+          "date": "5 January",
+          "entries": [
+            {
+              "client": "HI",
+              "start": "17:02",
+              "end": "11:39",
+              "milage": "13.91",
+              "time": "1h 31m"
+            },
+            {
+              "client": "IX",
+              "start": "17:37",
+              "end": "12:42",
+              "milage": "3.30",
+              "time": "4h 50m"
+            },
+            {
+              "client": "NJ",
+              "start": "10:07",
+              "end": "11:55",
+              "milage": "3.46",
+              "time": "1h 59m"
+            },
+            {
+              "client": "VQ",
+              "start": "09:57",
+              "end": "11:30",
+              "milage": "14.40",
+              "time": "2h 32m"
+            },
+            {
+              "client": "AI",
+              "start": "12:40",
+              "end": "11:11",
+              "milage": "15.34",
+              "time": "4h 57m"
+            }
+          ]
+        }
+      ]
 
-        const listContainer = document.getElementById('pageModalExample');
+      const listContainer = document.getElementById('pageModalExample');
 
-        function onItemClick(item) {
-          const modalBody = document.querySelector('.modal-body');
+      function onItemClick(item) {
+        const modalBody = document.querySelector('.modal-body');
 
-          modalBody.innerHTML = `
+        modalBody.innerHTML = `
           ${item.entries.map(
-            entry => `
+          entry => `
                 <div class="card">
                   <div class="card-body">
                     <div>
@@ -222,40 +1163,41 @@
                   </div>
                 </div>
             `,
-          )}
+        )}
           `;
 
-          const modal = new bootstrap.Modal(document.getElementById('exampleModal'), {});
+        const modal = new bootstrap.Modal(document.getElementById('exampleModal'), {});
 
-          modal.show();
+        modal.show();
 
-          window.ReactNativeWebView.postMessage(JSON.stringify({ modalOpen: true }));
-        }
+        window.ReactNativeWebView.postMessage(JSON.stringify({ modalOpen: true }));
+      }
 
-        window.dismissModal = () => {
-          const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-          modal.hide();
-        };
+      window.dismissModal = () => {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+        modal.hide();
+      };
 
-        dummyData.forEach((item, index) => {
-          const listItem = document.createElement('li');
-          listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-          const chevron = document.createElement('span');
-          // chevron.innerText = ">"
+      dummyData.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+        const chevron = document.createElement('span');
+        // chevron.innerText = ">"
 
-          const listButton = document.createElement('button');
-          listButton.className = 'btn';
-          listButton.type = 'button';
-          listButton.innerText = item.date;
+        const listButton = document.createElement('button');
+        listButton.className = 'btn';
+        listButton.type = 'button';
+        listButton.innerText = item.date;
 
-          listItem.addEventListener('click', () => onItemClick(item));
+        listItem.addEventListener('click', () => onItemClick(item));
 
-          listItem.appendChild(listButton);
-          listItem.appendChild(chevron);
+        listItem.appendChild(listButton);
+        listItem.appendChild(chevron);
 
-          listContainer.appendChild(listItem);
-        });
+        listContainer.appendChild(listItem);
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
