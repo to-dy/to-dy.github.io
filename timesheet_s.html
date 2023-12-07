@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Your Timesheet</title>
+    <link rel="stylesheet" href="https://billing.staging.birdie.care/api/v1/timesheet/static/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <style>
+    .list-group-item {
+      padding: 20px 18px;
+    }
+
+    .list-group-item span {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-left: auto;
+      content: '';
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      transform: rotate(270deg);
+      background-size: 20px;
+    }
+
+    .card-body div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      padding-bottom: 16px;
+    }
+  </style>
+
+  <body>
+    <ul class="list-group" id="pageModalExample"></ul>
+
+    <!-- Modal -->
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const dummyData = [
+          {
+            date: '8 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          // make more dummy data copilot
+          {
+            date: '9 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '10 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '11 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '12 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '13 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '14 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '15 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
+          },
+          {
+            date: '16 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '17 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '18 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '19 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '20 November',
+            entries: [
+              { client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+              { client: 'TT', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' },
+            ],
+          },
+          {
+            date: '21 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
+          },
+          {
+            date: '22 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
+          },
+          {
+            date: '23 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00', time: '2h 30m' }],
+          },
+          {
+            date: '24 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30', milage: '0.00' }],
+          },
+          {
+            date: '25 November',
+            entries: [{ client: 'CN', start: '09:00', end: '10:30' }],
+          },
+          {
+            date: '26 November',
+            entries: [{ client: 'CN', start: '09:00' }],
+          },
+        ];
+
+        const listContainer = document.getElementById('pageModalExample');
+
+        function onItemClick(item) {
+          const modalBody = document.querySelector('.modal-body');
+
+          modalBody.innerHTML = `
+          ${item.entries.map(
+            entry => `
+                <div class="card">
+                  <div class="card-body">
+                    <div>
+                      <h3>Client</h3>
+                      <span>${entry.client}</span>
+                    </div>
+                    <div>
+                      <h3>Start</h3>
+                      <span>${entry.start}</span>
+                    </div>
+                    <div>
+                      <h3>End</h3>
+                      <span>${entry.end}</span>
+                    </div>
+                    <div>
+                      <h3>Milage</h3>
+                      <span>${entry.milage}</span>
+                    </div>
+                    <div>
+                      <h3>Time</h3>
+                      <span>${entry.time}</span>
+                    </div>
+                  </div>
+                </div>
+            `,
+          )}
+          `;
+
+          const modal = new bootstrap.Modal(document.getElementById('exampleModal'), {});
+
+          modal.show();
+
+          window.ReactNativeWebView.postMessage(JSON.stringify({ modalOpen: true }));
+        }
+
+        window.dismissModal = () => {
+          const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+          modal.hide();
+        };
+
+        dummyData.forEach((item, index) => {
+          const listItem = document.createElement('li');
+          listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+          const chevron = document.createElement('span');
+          // chevron.innerText = ">"
+
+          const listButton = document.createElement('button');
+          listButton.className = 'btn';
+          listButton.type = 'button';
+          listButton.innerText = item.date;
+
+          listItem.addEventListener('click', () => onItemClick(item));
+
+          listItem.appendChild(listButton);
+          listItem.appendChild(chevron);
+
+          listContainer.appendChild(listItem);
+        });
+      });
+    </script>
+  </body>
+</html>
